@@ -56,8 +56,7 @@ f x = ((x <<< 1) & (x <<< 8)) ^ (x <<< 2);
 
 skeleton : {n m T j}
     ( fin n, fin m, fin T, fin j
-    , n >= 2, T >= 0
-    , T == max(T-1-m+1,0)+m
+    , n >= 2, 4 >= m, T >= 4
     ) => RoundFunction -> ([T][n] -> [T][n]) -> [m][n] -> ([n], [n]) -> ([n], [n]);
 skeleton RF kF k0 p0 = ps ! 0
   where {
@@ -67,16 +66,14 @@ skeleton RF kF k0 p0 = ps ! 0
 
 encrypt : {n m T j} 
     ( fin n, fin m, fin T, fin j
-    , n >= 2, T >= 0
-    , T == max(T-1-m+1,0)+m
+    , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
 encrypt = skeleton `{n=n,m=m,T=T,j=j} R (\x -> x);
 
 
 decrypt : {n m T j} 
     ( fin n, fin m, fin T, fin j
-    , n >= 2, T >= 0
-    , T == max(T-1-m+1,0)+m
+    , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
 decrypt = skeleton `{n=n,m=m,T=T,j=j} R' reverse;
 
@@ -87,8 +84,7 @@ decrypt = skeleton `{n=n,m=m,T=T,j=j} R' reverse;
 
 expandKey : {n m T j}
     ( fin n, fin m, fin T, fin j
-    , n >= 2
-    , T == max(T-1-m+1,0)+m
+    , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> [T][n];
 expandKey k0 = k
   where
