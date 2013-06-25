@@ -102,7 +102,7 @@ expandKey k0 = k
              || i <- [`m .. `T - 1]
              |];
 
-// TODO define Z and prove it correct
+// TODO specify how Z is constructed
 Z = [ [ 1 1 1 1 1 0 1 0 0 0 1 0 0 1 0 1 0 1 1 0 0 0 0 1 1 1 0 0 1 1 0
         1 1 1 1 1 0 1 0 0 0 1 0 0 1 0 1 0 1 1 0 0 0 0 1 1 1 0 0 1 1 0
       ]
