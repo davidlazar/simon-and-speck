@@ -3,4 +3,6 @@ This is a [Cryptol](http://corp.galois.com/cryptol/) specification of the
 [June 19, 2013 Report](http://eprint.iacr.org/2013/404).
 
 This specification is proven correct using Cryptol's `:prove` command.
-See the `correctSimon*` and `correctSpeck*` theorems in the source files.
+See my blog post for more information:
+
+http://corp.galois.com/blog/2013/6/24/simon-and-speck-in-cryptol.html
