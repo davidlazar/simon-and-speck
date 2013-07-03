@@ -40,8 +40,6 @@ theorem correctSimon128_256: {k p}. Simon128_256' k (Simon128_256 k p) == p;
 // round function
 ///////////////////////////////////////////////////////////////////////
 
-type RoundFunction = [n] -> ([n], [n]) -> ([n], [n]);
-
 R k (x, y) = (y ^ f x ^ k, x);
 
 // inverse
@@ -54,28 +52,26 @@ f x = ((x <<< 1) & (x <<< 8)) ^ (x <<< 2);
 // encryption / decryption
 ///////////////////////////////////////////////////////////////////////
 
-skeleton : {n m T j}
-    ( fin n, fin m, fin T, fin j
-    , n >= 2, 4 >= m, T >= 4
-    ) => RoundFunction -> ([T][n] -> [T][n]) -> [m][n] -> ([n], [n]) -> ([n], [n]);
-skeleton RF kF k0 p0 = ps ! 0
-  where {
-    ps = [p0] # [| RF k p || p <- ps || k <- kF ks |];
-    ks = expandKey `{n=n,m=m,T=T,j=j} (reverse k0);
-  };
-
 encrypt : {n m T j}
     ( fin n, fin m, fin T, fin j
     , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
-encrypt = skeleton `{n=n,m=m,T=T,j=j} R (\x -> x);
+encrypt k0 p0 = ps ! 0
+  where {
+    ps = [p0] # [| R k p || p <- ps || k <- ks |];
+    ks = expandKey `{n=n,m=m,T=T,j=j} (reverse k0);
+  };
 
 
 decrypt : {n m T j}
     ( fin n, fin m, fin T, fin j
     , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
-decrypt = skeleton `{n=n,m=m,T=T,j=j} R' reverse;
+decrypt k0 p0 = ps ! 0
+  where {
+    ps = [p0] # [| R' k p || p <- ps || k <- reverse ks |];
+    ks = expandKey `{n=n,m=m,T=T,j=j} (reverse k0);
+  };
 
 
 ///////////////////////////////////////////////////////////////////////
