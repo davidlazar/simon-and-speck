@@ -58,7 +58,7 @@ f2 (x, y) = (y, x <<< (if `n == 16 then 2 else 3) ^ y);
 // encryption / decryption
 ///////////////////////////////////////////////////////////////////////
 
-encrypt : {n m T} 
+encrypt : {n m T}
     ( fin n, fin m, fin T
     , m >= 2, T >= 2, n >= width T
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
@@ -69,7 +69,7 @@ encrypt k0 p0 = ps ! 0
   };
 
 
-decrypt : {n m T} 
+decrypt : {n m T}
     ( fin n, fin m, fin T
     , m >= 2, T >= 2, n >= width T
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
