@@ -29,11 +29,11 @@ Simon128_192' = decrypt `{n=64,m=3,T=69,j=3};
 Simon128_256' = decrypt `{n=64,m=4,T=72,j=4};
 
 // check only a few of them for now
-theorem correctSimon32_64: {k p}. Simon32_64' k (Simon32_64 k p) == p;
-theorem correctSimon64_96: {k p}. Simon64_96' k (Simon64_96 k p) == p;
-theorem correctSimon96_144: {k p}. Simon96_144' k (Simon96_144 k p) == p;
-theorem correctSimon128_128: {k p}. Simon128_128' k (Simon128_128 k p) == p;
-theorem correctSimon128_256: {k p}. Simon128_256' k (Simon128_256 k p) == p;
+theorem correctSimon32_64: {k b}. Simon32_64' k (Simon32_64 k b) == b;
+theorem correctSimon64_96: {k b}. Simon64_96' k (Simon64_96 k b) == b;
+theorem correctSimon96_144: {k b}. Simon96_144' k (Simon96_144 k b) == b;
+theorem correctSimon128_128: {k b}. Simon128_128' k (Simon128_128 k b) == b;
+theorem correctSimon128_256: {k b}. Simon128_256' k (Simon128_256 k b) == b;
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -56,9 +56,9 @@ encrypt : {n m T j}
     ( fin n, fin m, fin T, fin j
     , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
-encrypt k0 p0 = ps ! 0
+encrypt k0 b0 = bs ! 0
   where {
-    ps = [p0] # [| R k p || p <- ps || k <- ks |];
+    bs = [b0] # [| R k b || b <- bs || k <- ks |];
     ks = expandKey `{n=n,m=m,T=T,j=j} (reverse k0);
   };
 
@@ -67,9 +67,9 @@ decrypt : {n m T j}
     ( fin n, fin m, fin T, fin j
     , n >= 2, 4 >= m, T >= 4
     ) => [m][n] -> ([n], [n]) -> ([n], [n]);
-decrypt k0 p0 = ps ! 0
+decrypt k0 b0 = bs ! 0
   where {
-    ps = [p0] # [| R' k p || p <- ps || k <- reverse ks |];
+    bs = [b0] # [| R' k b || b <- bs || k <- reverse ks |];
     ks = expandKey `{n=n,m=m,T=T,j=j} (reverse k0);
   };
 
